@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Center Workers: Overtime Check (Version C)</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800&amp;family=Caveat:wght@700&amp;family=IBM+Plex+Mono:wght@500;600&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Version C, quiz first: hi-vis sand page, navy ink and buttons, yellow answer tiles, pay stub explainer with red pen notes. */
+  --paper: #fffbea;
+  --ink: #1b2a41;
+  --muted: #4f5b6e;
+  --accent: #1d3f7a;
+  --accent-dark: #142d58;
+  --focus: rgba(29, 63, 122, .22);
+  --opt: #fff2bf;
+  --opt-line: #e9cd62;
+  --field: #ffffff;
+  --line: #c9bf94;
+  --rule: #efe3b4;
+  --qn-bg: #1d3f7a;
+  --qn-ink: #fff;
+  --pen: #d62828;
+  --error: #b42318;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: "DM Sans", system-ui, -apple-system, "Segoe UI", Arial, sans-serif; font-size: 17px; line-height: 1.5; }
+a { color: var(--accent-dark); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 640px; margin: 0 auto; padding: 0 18px; }
+.topbar { background: #fff; border-bottom: 1px solid var(--rule); }
+.topbar .wrap { display: flex; justify-content: space-between; align-items: center; min-height: 50px; gap: 12px; max-width: 640px; }
+.firm { font-weight: 800; letter-spacing: .06em; text-transform: uppercase; font-size: 13px; }
+.topbar a { font-weight: 700; text-decoration: none; }
+.pre { margin: 22px 0 0; font-weight: 800; font-size: 20px; color: var(--accent-dark); }
+h1 { font-weight: 800; font-size: clamp(32px, 8.4vw, 46px); line-height: 1.08; margin: 6px 0 0; letter-spacing: -.015em; }
+h1 .l2 { display: block; margin-top: 8px; }
+h1 mark { color: inherit; padding: .02em .25em .06em; margin: 0 -.1em; border-radius: .8em .3em .9em .35em / .45em .8em .35em .7em;
+  background: linear-gradient(100deg, rgba(255,205,40,0) .8%, rgba(255,205,40,.9) 2.6%, rgba(255,215,70,.75) 6%, rgba(255,215,70,.5) 92%, rgba(255,205,40,.85) 96.5%, rgba(255,205,40,0) 99%);
+  -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.sub { font-size: 18px; margin: 12px 0 0; }
+.stub { margin: 22px 0 6px; background: #fff; border: 1px solid #d9d4c7; border-radius: 6px; padding: 16px 16px 14px; box-shadow: 0 8px 22px rgba(27, 42, 65, .10); transform: rotate(-1deg); font-family: "IBM Plex Mono", ui-monospace, monospace; position: relative; }
+.stub .head { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; letter-spacing: .08em; color: #6a6a6a; border-bottom: 2px solid #222; padding-bottom: 6px; }
+.stub table { width: 100%; border-collapse: collapse; font-size: 15px; margin-top: 4px; }
+.stub th { font-size: 11px; color: #6a6a6a; text-align: right; font-weight: 600; padding: 6px 4px 2px; }
+.stub th:first-child, .stub td:first-child { text-align: left; }
+.stub td { padding: 9px 4px; text-align: right; border-bottom: 1px dashed #d8d8d8; font-weight: 500; }
+.stub tr.ot td { position: relative; }
+.stub tr.ot td:nth-child(3) span { outline: 2.5px solid var(--pen); outline-offset: 3px; border-radius: 50%; padding: 0 4px; }
+.stub tr.bonus td { background: rgba(255, 215, 70, .55); }
+.pen { font-family: "Caveat", cursive; color: var(--pen); font-size: 23px; line-height: 1.05; font-weight: 700; }
+.pen.n1 { margin: 8px 0 0; text-align: right; }
+.cap { font-size: 13px; color: var(--muted); margin: 10px 0 0; text-align: center; }
+.quiz { margin: 18px 0 10px; background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 18px 16px 20px; box-shadow: 0 6px 18px rgba(27, 42, 65, .06); }
+.quiz h2 { margin: 0; font-size: 22px; font-weight: 800; background: var(--opt); padding: 8px 12px; border-radius: 8px; }
+.trust { margin: 10px 0 0; font-size: 15px; font-weight: 600; color: var(--muted); }
+.progress { height: 8px; background: var(--opt); border-radius: 99px; margin: 14px 0 6px; overflow: hidden; }
+.progress .bar { height: 100%; width: 16%; background: var(--accent); border-radius: 99px; transition: width .25s; }
+.progress-text { margin: 0; font-size: 14px; color: var(--muted); font-weight: 600; }
+.quiz .q { padding: 14px 0 0; border: 0; }
+.quiz .ql { font-size: 21px; font-weight: 800; }
+.help { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
+.opts { display: grid; gap: 10px; margin-top: 12px; }
+.opt { display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 12px 16px; border: 1.5px solid var(--opt-line); border-radius: 10px; background: var(--opt); cursor: pointer; font-size: 18px; font-weight: 600; }
+.opt:hover { border-color: var(--accent); }
+.opt input { width: 22px; height: 22px; accent-color: var(--accent); flex: 0 0 22px; margin: 0; }
+.opt:has(input:checked) { border-color: var(--accent); background: #ffe27a; }
+.nav-row { display: flex; gap: 10px; margin-top: 18px; }
+.btn { flex: 1; display: inline-flex; align-items: center; justify-content: center; min-height: 56px; padding: 12px 22px; border: 0; border-radius: 10px; background: var(--accent); color: #fff; font: inherit; font-weight: 700; font-size: 19px; cursor: pointer; text-decoration: none; }
+.btn:hover { background: var(--accent-dark); }
+.btn.ghost { flex: 0 0 auto; background: #fff; color: var(--ink); border: 1.5px solid var(--line); }
+.btn[disabled] { opacity: .75; cursor: wait; }
+.quiz .contact { border-top: 0; padding-top: 14px; }
+.why { margin: 20px 0 0; }
+.why h2 { font-size: 22px; font-weight: 800; margin: 0 0 8px; background: var(--opt); padding: 8px 12px; border-radius: 8px; }
+.why p { margin: 0 0 10px; }
+#check { scroll-margin-top: 10px; }
+form { margin-top: 10px; }
+.q { padding: 16px 0 16px 48px; border-top: 1px solid var(--rule); position: relative; }
+.q .qn { position: absolute; left: 0; top: 18px; width: 34px; height: 34px; border-radius: 50%; background: var(--qn-bg); color: var(--qn-ink); display: grid; place-items: center; font-weight: 700; font-size: 17px; }
+.ql { display: block; font-weight: 700; font-size: 18px; line-height: 1.35; padding-top: 4px; }
+.txt { width: 100%; min-height: 50px; font: inherit; font-size: 17px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); background: var(--field); }
+.txt:focus, select:focus { border-color: var(--accent) !important; outline: none; box-shadow: 0 0 0 3px var(--focus); }
+.txt:disabled { color: #8a8f98; }
+select { width: 100%; max-width: 440px; margin-top: 10px; min-height: 50px; font: inherit; font-size: 17px; color: var(--ink); padding: 10px 44px 10px 14px; appearance: none; -webkit-appearance: none; background-color: var(--opt); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; background-size: 20px; border: 1px solid var(--opt-line); border-radius: 8px; cursor: pointer; }
+select.empty { color: var(--muted); }
+.dd { margin-top: 10px; max-width: 440px; }
+.dd summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 50px; padding: 10px 14px; border: 1px solid var(--opt-line); border-radius: 8px; background: var(--opt); cursor: pointer; font-size: 17px; }
+.dd summary::-webkit-details-marker { display: none; }
+.dd summary::after { content: ""; flex: 0 0 20px; height: 20px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") center / 20px no-repeat; transition: transform .15s; }
+.dd[open] summary::after { transform: rotate(180deg); }
+.dd .dd-text { color: var(--muted); }
+.dd.has-value .dd-text { color: var(--ink); font-weight: 600; }
+.dd-panel { margin-top: 6px; border: 1px solid var(--opt-line); border-radius: 8px; background: #fff; padding: 6px; box-shadow: 0 10px 24px rgba(0,0,0,.10); display: grid; gap: 2px; }
+.dd-panel label { display: flex; align-items: center; gap: 10px; min-height: 46px; padding: 8px 10px; border-radius: 6px; font-size: 16px; cursor: pointer; }
+.dd-panel label:hover, .dd-panel label:has(input:checked) { background: var(--opt); }
+.dd-panel input, .consent input, .inline-check input { width: 20px; height: 20px; accent-color: var(--accent); flex: 0 0 20px; margin: 0; }
+.dd-done { margin: 4px 0 2px; min-height: 44px; border: 0; border-radius: 6px; background: var(--accent); color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
+.invalid select, .invalid .txt, .invalid .dd summary { border-color: var(--error) !important; }
+.contact { border-top: 1px solid var(--rule); padding: 20px 0 6px; }
+.contact h3 { margin: 0 0 4px; font-size: 19px; }
+.grid2 { display: grid; gap: 14px; margin-top: 12px; }
+.field label { display: block; font-weight: 600; font-size: 15px; margin-bottom: 6px; }
+.inline-check { display: inline-flex !important; align-items: center; gap: 8px; font-weight: 500 !important; margin-top: 8px; }
+.consent { display: flex; gap: 10px; align-items: flex-start; margin-top: 18px; font-size: 15px; }
+.consent input { margin-top: 3px; }
+.fine { font-size: 14px; color: var(--muted); margin: 10px 0 0; }
+.err { color: var(--error); font-weight: 600; font-size: 15px; margin-top: 6px; }
+.err:empty { display: none; }
+.note { margin: 10px 0 0; padding: 10px 14px; background: #fff6e0; border: 1px solid #f0d58a; border-radius: 6px; font-weight: 500; }
+.submit-row { margin-top: 20px; }
+.form-status { margin-top: 14px; padding: 12px 14px; border-radius: 6px; font-weight: 500; }
+.form-status.error { background: #fdecea; border: 1px solid #f3b7b0; color: #7a1a12; }
+.config-flag { display: inline-block; margin-left: 6px; font-size: 12px; font-weight: 700; background: #fff6e0; color: #6b4e00; padding: 1px 6px; border-radius: 4px; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.success { border: 1px solid var(--rule); border-left: 4px solid #1d7a4f; background: #f1f8f4; padding: 18px 20px; border-radius: 6px; margin-top: 18px; }
+.success h3 { margin: 0 0 6px; font-size: 22px; }
+.success p { margin: 0; }
+.photo { margin: 0; border-radius: 14px; overflow: hidden; background: var(--opt); aspect-ratio: 3 / 2; position: relative; }
+.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo.noimg::after { content: "Photo goes here"; position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-weight: 600; border: 2px dashed var(--opt-line); border-radius: 14px; }
+.photo.noimg img { display: none; }
+footer { padding: 26px 0 44px; font-size: 13.5px; color: var(--muted); line-height: 1.55; border-top: 1px solid var(--rule); margin-top: 20px; }
+footer p { margin: 0 0 8px; max-width: 90ch; }
+footer strong { color: var(--ink); }
+@media (min-width: 760px) { .grid2 { grid-template-columns: 1fr 1fr; } }
+.linkbtn { background: none; border: 0; padding: 0; font: inherit; color: var(--accent); font-weight: 600; cursor: pointer; text-decoration: underline; }
+.back-note { margin: 0 0 6px; }
+
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <span class="firm">Kennedy Law Firm, LLP</span>
+    <a href="tel:+17134256445" aria-label="Call Kennedy Law Firm at 713-425-6445">713-425-6445</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="pre">Data Center Workers:</p>
+  <h1>Worked on a Data Center Project? <span class="l2"><mark>Got Extra Pay? Your Overtime Might Be Short.</mark></span></h1>
+  <p class="sub">Your overtime might have been figured without some of your extra pay, like a bonus or per diem.</p>
+
+  <section class="quiz" id="check" aria-labelledby="form-h">
+    <h2 id="form-h">Check your overtime in 60 seconds</h2>
+    <p class="trust">Free, confidential initial review by Kennedy Law Firm, LLP. No obligation to hire the firm.</p>
+    <div class="progress" aria-hidden="true"><div class="bar" id="progress-bar"></div></div>
+    <p class="progress-text" id="progress-text">Question 1 of 5</p>
+    <form id="screen-form" novalidate>
+      <div class="q" data-step data-field="worked_dc">
+        <span class="ql" id="worked_dc-l">Have you worked on a data center project?</span>
+        <div class="opts" role="radiogroup" aria-labelledby="worked_dc-l">
+            <label class="opt" for="worked_dc-0"><input type="radio" name="worked_dc" id="worked_dc-0" value="Yes, now">Yes, I'm on one now</label>
+            <label class="opt" for="worked_dc-1"><input type="radio" name="worked_dc" id="worked_dc-1" value="Yes, last 3 years">Yes, in the last 3 years</label>
+            <label class="opt" for="worked_dc-2"><input type="radio" name="worked_dc" id="worked_dc-2" value="Yes, over 3 years ago">Yes, more than 3 years ago</label>
+            <label class="opt" for="worked_dc-3"><input type="radio" name="worked_dc" id="worked_dc-3" value="No">No</label>
+        </div>
+        <p class="note" id="q1-note" hidden>This check is only for people who have worked on a data center project.</p>
+        <div class="err" role="alert"></div>
+      </div>
+      <div class="q" data-step data-field="pay_type">
+        <span class="ql" id="pay_type-l">How were you paid?</span>
+        <div class="opts" role="radiogroup" aria-labelledby="pay_type-l">
+            <label class="opt" for="pay_type-0"><input type="radio" name="pay_type" id="pay_type-0" value="Hourly">By the hour</label>
+            <label class="opt" for="pay_type-1"><input type="radio" name="pay_type" id="pay_type-1" value="Day rate">Day rate</label>
+            <label class="opt" for="pay_type-2"><input type="radio" name="pay_type" id="pay_type-2" value="Salary">Salary</label>
+            <label class="opt" for="pay_type-3"><input type="radio" name="pay_type" id="pay_type-3" value="Not sure">Not sure</label>
+        </div>
+        <div class="err" role="alert"></div>
+      </div>
+      <div class="q" data-step data-field="ot_hours">
+        <span class="ql" id="ot_hours-l">Did you work more than 40 hours in a week?</span>
+        <div class="opts" role="radiogroup" aria-labelledby="ot_hours-l">
+            <label class="opt" for="ot_hours-0"><input type="radio" name="ot_hours" id="ot_hours-0" value="Most weeks">Most weeks</label>
+            <label class="opt" for="ot_hours-1"><input type="radio" name="ot_hours" id="ot_hours-1" value="Some weeks">Some weeks</label>
+            <label class="opt" for="ot_hours-2"><input type="radio" name="ot_hours" id="ot_hours-2" value="Rarely or never">Rarely or never</label>
+            <label class="opt" for="ot_hours-3"><input type="radio" name="ot_hours" id="ot_hours-3" value="Not sure">Not sure</label>
+        </div>
+        <div class="err" role="alert"></div>
+      </div>
+      <div class="q" data-step data-field="extra_pay">
+        <span class="ql" id="q4-label">Did you get any extra pay, like a bonus or per diem?</span>
+        <p class="help">Pick all that apply, then tap Next.</p>
+        <div class="opts" role="group" aria-labelledby="q4-label">
+            <label class="opt" for="q4-bonus"><input type="checkbox" name="extra_pay" data-group="extra_pay" id="q4-bonus" value="Bonus">Bonus</label>
+            <label class="opt" for="q4-perdiem"><input type="checkbox" name="extra_pay" data-group="extra_pay" id="q4-perdiem" value="Per diem">Per diem</label>
+            <label class="opt" for="q4-shift"><input type="checkbox" name="extra_pay" data-group="extra_pay" id="q4-shift" value="Shift differential">Shift differential</label>
+            <label class="opt" for="q4-other"><input type="checkbox" name="extra_pay" data-group="extra_pay" id="q4-other" value="Other incentive pay">Other incentive pay</label>
+            <label class="opt" for="q4-none"><input type="checkbox" name="extra_pay" data-group="extra_pay" data-exclusive="true" id="q4-none" value="None">None</label>
+            <label class="opt" for="q4-ns"><input type="checkbox" name="extra_pay" data-group="extra_pay" data-exclusive="true" id="q4-ns" value="Not sure">Not sure</label>
+        </div>
+        <div class="err" role="alert"></div>
+      </div>
+      <div class="q" data-step data-field="state">
+        <span class="ql" id="state-l">What state was the project in?</span>
+        <div class="opts" role="radiogroup" aria-labelledby="state-l">
+            <label class="opt" for="state-0"><input type="radio" name="state" id="state-0" value="Arizona">Arizona</label>
+            <label class="opt" for="state-1"><input type="radio" name="state" id="state-1" value="Georgia">Georgia</label>
+            <label class="opt" for="state-2"><input type="radio" name="state" id="state-2" value="Illinois">Illinois</label>
+            <label class="opt" for="state-3"><input type="radio" name="state" id="state-3" value="Indiana">Indiana</label>
+            <label class="opt" for="state-4"><input type="radio" name="state" id="state-4" value="Ohio">Ohio</label>
+            <label class="opt" for="state-5"><input type="radio" name="state" id="state-5" value="Pennsylvania">Pennsylvania</label>
+            <label class="opt" for="state-6"><input type="radio" name="state" id="state-6" value="Texas">Texas</label>
+            <label class="opt" for="state-7"><input type="radio" name="state" id="state-7" value="Virginia">Virginia</label>
+            <label class="opt" for="state-8"><input type="radio" name="state" id="state-8" value="Other">Another state</label>
+        </div>
+        <div class="err" role="alert"></div>
+      </div>
+      <div class="contact" data-step>
+        <h3>Your contact information</h3>
+        <div class="grid2">
+          <div class="field" data-field="full_name">
+            <label for="full_name">Full name</label>
+            <input class="txt" type="text" id="full_name" name="full_name" autocomplete="name">
+            <div class="err" role="alert"></div>
+          </div>
+          <div class="field" data-field="phone">
+            <label for="phone">Mobile phone</label>
+            <input class="txt" type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="(555) 555-0123">
+            <div class="err" role="alert"></div>
+          </div>
+          <div class="field" data-field="email">
+            <label for="email">Email</label>
+            <input class="txt" type="email" id="email" name="email" autocomplete="email" inputmode="email" placeholder="name@example.com">
+            <div class="err" role="alert"></div>
+          </div>
+          <div class="field" data-field="employer">
+            <label for="employer">Company that paid you</label>
+            <input class="txt" type="text" id="employer" name="employer" autocomplete="organization">
+            <label class="inline-check" for="employer_not_sure"><input type="checkbox" id="employer_not_sure" name="employer_not_sure">Not sure</label>
+            <div class="err" role="alert"></div>
+          </div>
+        </div>
+        <div class="hp" aria-hidden="true">
+          <label for="company_website">Leave this empty</label>
+          <input type="text" id="company_website" name="company_website" tabindex="-1" autocomplete="off">
+        </div>
+        <div data-field="consent">
+          <div class="consent">
+            <input type="checkbox" id="consent" name="consent">
+            <label for="consent" id="consent-text">I agree that Kennedy Law Firm may contact me by phone, text, or email about this request. Message and data rates may apply.</label>
+          </div>
+          <div class="err" role="alert"></div>
+        </div>
+        <p class="fine">See the <a id="privacy-link" href="#privacy-policy">Privacy Policy</a>. Your information will be sent to Kennedy Law Firm, LLP for review. Submitting this form does not create an attorney-client relationship or enroll you in a lawsuit.</p>
+      </div>
+
+      <div class="nav-row">
+        <button type="button" class="btn ghost" id="back-btn" hidden>Back</button>
+        <button type="button" class="btn" id="next-btn">Next</button>
+        <button type="submit" class="btn" id="submit-btn" hidden><span class="label">Send My Answers</span></button>
+      </div>
+      <div class="form-status" id="form-status" role="status" aria-live="polite" hidden></div>
+    </form>
+
+    <div class="success" id="success" hidden>
+      <h3>Request received</h3>
+      <p>Kennedy Law Firm has your information. The firm will review it and may contact you by phone, text, or email.</p>
+    </div>
+
+  </section>
+
+  <section class="why" aria-labelledby="stub-h">
+    <h2 id="stub-h">What to look for on your pay stub</h2>
+    <p>A bonus or per diem line in a week with overtime, and an overtime rate that is exactly 1.5 times your base wage.</p>
+  <figure class="stub" style="margin-top:14px" aria-label="Example pay stub: 40 regular hours at 45 dollars, 20 overtime hours at 67 dollars 50 cents, which is 1.5 times the base wage only, plus a 600 dollar daily bonus and 840 dollars of per diem. A handwritten note asks whether the bonus was left out of the overtime rate.">
+    <div class="head" aria-hidden="true"><span>EARNINGS</span><span>EXAMPLE ONLY</span></div>
+    <table aria-hidden="true">
+      <tr><th>Pay</th><th>Hours</th><th>Rate</th><th>Amount</th></tr>
+      <tr><td>Regular</td><td>40.00</td><td>45.00</td><td>1,800.00</td></tr>
+      <tr class="ot"><td>Overtime</td><td>20.00</td><td><span>67.50</span></td><td>1,350.00</td></tr>
+      <tr class="bonus"><td>Daily bonus</td><td></td><td></td><td>600.00</td></tr>
+      <tr><td>Per diem</td><td></td><td></td><td>840.00</td></tr>
+    </table>
+    <p class="pen n1" aria-hidden="true">Was the bonus counted in the overtime rate?</p>
+  </figure>
+  <p class="cap">Example only. Not anyone's real pay records.</p>
+
+  </section>
+
+  <section class="why" aria-labelledby="why-h">
+    <h2 id="why-h">Why this matters</h2>
+    <p>Under federal law, many bonuses, and some per diem and other extra pay, might need to be counted in your overtime rate, not just your base wage.</p>
+    <p>For any hourly worker on a data center project: electricians, laborers, cable and fiber installers, pipefitters, HVAC techs, carpenters, ironworkers, operators, and more. Union or nonunion. Current or former.</p>
+  </section>
+
+  <footer>
+    <p><strong>Attorney advertising.</strong> This is an advertisement by Kennedy Law Firm, LLP of Houston, Texas. Galvin Kennedy is responsible for this page. Kennedy Law Firm, LLP, 2925 Richmond Ave., Ste. 1200, Houston, TX 77098. 713-425-6445.</p>
+    <p>This page describes possible claims and does not establish that any employer violated the law. Kennedy Law Firm is not affiliated with any data center owner, contractor, or staffing company.</p>
+    <p>Submitting this form does not create an attorney-client relationship and does not enroll you in any lawsuit.</p>
+    <p>Every case is different. Past results do not guarantee future results, and no one can promise you will recover money.</p>
+  </footer>
+</main>
+<script>
+/* ===== Lead delivery settings: fill these in before launch ===== */
+window.LP_CONFIG = {
+  variant: "C-paystub-quiz",
+  campaign: "data-center-regular-rate",
+  leadEndpoint: "",   /* HTTPS URL that accepts a JSON POST and answers 2xx after storing the lead */
+  privacyUrl: "",     /* Firm privacy-policy URL */
+  phone: "713-425-6445",
+  timeoutMs: 15000,
+  onConfirmed: null   /* optional: function to fire a Meta Pixel "Lead" event after confirmed receipt */
+};
+</script>
+<script>
+(function () {
+  "use strict";
+  var CONFIG = window.LP_CONFIG || {};
+  var SUBMIT_LABEL = "Send My Answers";
+  var form = document.getElementById("screen-form");
+  if (!form) return;
+  var statusEl = document.getElementById("form-status");
+  var submitBtn = document.getElementById("submit-btn");
+  var successEl = document.getElementById("success");
+  var sending = false;
+
+  function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+  function fieldBox(name) { return form.querySelector('[data-field="' + name + '"]'); }
+  function digits(s) { return (s || "").replace(/\D/g, ""); }
+  function reduced() { return matchMedia("(prefers-reduced-motion: reduce)").matches; }
+
+  function setError(name, msg) {
+    var box = fieldBox(name); if (!box) return;
+    var err = box.querySelector(".err");
+    box.classList.add("invalid");
+    if (err) err.textContent = msg;
+    $all("input, select", box).forEach(function (el) { el.setAttribute("aria-invalid", "true"); });
+  }
+  function clearError(name) {
+    var box = fieldBox(name); if (!box) return;
+    var err = box.querySelector(".err");
+    box.classList.remove("invalid");
+    if (err) err.textContent = "";
+    $all("input, select", box).forEach(function (el) { el.removeAttribute("aria-invalid"); });
+  }
+
+  var privacy = document.getElementById("privacy-link");
+  if (privacy) {
+    if (CONFIG.privacyUrl) { privacy.setAttribute("href", CONFIG.privacyUrl); }
+    else {
+      var mark = document.createElement("span");
+      mark.className = "config-flag";
+      mark.textContent = "privacy URL not set";
+      privacy.parentNode.insertBefore(mark, privacy.nextSibling);
+    }
+  }
+
+  $all('input[type="checkbox"][data-group]', form).forEach(function (cb) {
+    cb.addEventListener("change", function () {
+      var group = $all('input[data-group="' + cb.getAttribute("data-group") + '"]', form);
+      if (cb.checked) {
+        if (cb.getAttribute("data-exclusive") === "true") group.forEach(function (o) { if (o !== cb) o.checked = false; });
+        else group.forEach(function (o) { if (o.getAttribute("data-exclusive") === "true") o.checked = false; });
+      }
+      clearError(cb.getAttribute("data-group"));
+    });
+  });
+
+  var employer = document.getElementById("employer");
+  var employerNS = document.getElementById("employer_not_sure");
+  employerNS.addEventListener("change", function () {
+    employer.disabled = employerNS.checked;
+    if (employerNS.checked) employer.value = "";
+    clearError("employer");
+  });
+
+  function val(name) {
+    var s = form.querySelector('select[name="' + name + '"]');
+    if (s) return s.value;
+    var r = form.querySelector('input[type="radio"][name="' + name + '"]:checked');
+    return r ? r.value : "";
+  }
+
+  var q1Note = document.getElementById("q1-note");
+  $all('[name="worked_dc"]', form).forEach(function (el) {
+    el.addEventListener("change", function () { q1Note.hidden = val("worked_dc") !== "No"; });
+  });
+
+  $all("select", form).forEach(function (s) {
+    function mark() { s.classList.toggle("empty", !s.value); }
+    s.addEventListener("change", mark); mark();
+  });
+
+  var dds = $all("details.dd", form);
+  function ddRefresh(d) {
+    var picked = $all("input:checked", d).map(function (i) { return i.value; });
+    var txt = d.querySelector(".dd-text");
+    if (!picked.length) { txt.textContent = d.getAttribute("data-placeholder"); d.classList.remove("has-value"); }
+    else { txt.textContent = picked.length <= 2 ? picked.join(", ") : picked.length + " selected"; d.classList.add("has-value"); }
+  }
+  dds.forEach(function (d) {
+    $all("input", d).forEach(function (i) { i.addEventListener("change", function () { ddRefresh(d); }); });
+    var done = d.querySelector(".dd-done");
+    if (done) done.addEventListener("click", function () { d.open = false; d.querySelector("summary").focus(); });
+    ddRefresh(d);
+  });
+  document.addEventListener("click", function (e) {
+    dds.forEach(function (d) { if (d.open && !d.contains(e.target)) d.open = false; });
+  });
+
+  $all("input, select", form).forEach(function (el) {
+    var ev = (el.type === "checkbox" || el.tagName === "SELECT") ? "change" : "input";
+    el.addEventListener(ev, function () {
+      var box = el.closest("[data-field]");
+      if (box && box.classList.contains("invalid")) clearError(box.getAttribute("data-field"));
+    });
+  });
+
+  var RULES = {
+    worked_dc: function () {
+      var v = val("worked_dc");
+      if (!v) return "Choose one.";
+      if (v === "No") return "This check is only for people who have worked on a data center project.";
+      return "";
+    },
+    pay_type: function () { return val("pay_type") ? "" : "Choose one."; },
+    ot_hours: function () { return val("ot_hours") ? "" : "Choose one."; },
+    extra_pay: function () { return form.querySelector('input[name="extra_pay"]:checked') ? "" : "Choose at least one, or None or Not sure."; },
+    state: function () { return val("state") ? "" : "Choose one."; },
+    full_name: function () {
+      var v = (form.elements["full_name"].value || "").trim();
+      return (v.length >= 2 && /[A-Za-zÀ-ɏ]/.test(v)) ? "" : "Enter your full name.";
+    },
+    phone: function () {
+      var d = digits(form.elements["phone"].value);
+      if (d.length === 11 && d.charAt(0) === "1") d = d.slice(1);
+      return d.length === 10 ? "" : "Enter a 10-digit phone number.";
+    },
+    email: function () {
+      var v = (form.elements["email"].value || "").trim();
+      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? "" : "Enter an email address like name@example.com.";
+    },
+    employer: function () {
+      if (employerNS.checked) return "";
+      return (employer.value || "").trim().length >= 2 ? "" : "Enter the company that paid you, or check Not sure.";
+    },
+    consent: function () { return form.elements["consent"].checked ? "" : "Check this box so the firm can contact you."; }
+  };
+
+  function validate(names) {
+    var firstBad = null;
+    names.forEach(function (n) {
+      var msg = RULES[n]();
+      if (msg) { setError(n, msg); if (!firstBad) firstBad = n; } else { clearError(n); }
+    });
+    return firstBad;
+  }
+  function focusField(name) {
+    var box = fieldBox(name); if (!box) return;
+    var dd = box.querySelector("details.dd");
+    var el = dd ? dd.querySelector("summary") : box.querySelector("input:not([disabled]), select");
+    if (steps.length) { var st = box.closest("[data-step]"); var k = steps.indexOf(st); if (k > -1 && k !== current) showStep(k, false); }
+    if (el) el.focus({ preventScroll: true });
+    box.scrollIntoView({ behavior: reduced() ? "auto" : "smooth", block: "center" });
+  }
+
+
+  /* ---------- quiz stepper (only when the form has data-step sections) ---------- */
+  var steps = $all("[data-step]", form);
+  var current = 0;
+  var progressText = document.getElementById("progress-text");
+  var progressBar = document.getElementById("progress-bar");
+  var backBtn = document.getElementById("back-btn");
+  var nextBtn = document.getElementById("next-btn");
+  function fieldsIn(c) { var b = $all("[data-field]", c); if (c.hasAttribute("data-field")) b.unshift(c); return b.map(function (x) { return x.getAttribute("data-field"); }); }
+  function showStep(i, focus) {
+    current = i;
+    steps.forEach(function (s, k) { s.hidden = k !== i; });
+    var total = steps.length;
+    if (progressText) progressText.textContent = i < total - 1 ? ("Question " + (i + 1) + " of " + (total - 1)) : "Last step: how to reach you";
+    if (progressBar) progressBar.style.width = Math.round(((i + 1) / total) * 100) + "%";
+    if (backBtn) backBtn.hidden = i === 0;
+    if (nextBtn) nextBtn.hidden = i === total - 1;
+    submitBtn.hidden = i !== total - 1;
+    if (focus) { var h = steps[i].querySelector(".ql, h3"); if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); } }
+  }
+  function goNext() {
+    var bad = validate(fieldsIn(steps[current]));
+    if (bad) { focusField(bad); return; }
+    showStep(current + 1, true);
+  }
+  if (steps.length) {
+    showStep(0, false);
+    nextBtn.addEventListener("click", goNext);
+    backBtn.addEventListener("click", function () { showStep(current - 1, true); });
+    $all('input[type="radio"]', form).forEach(function (r) {
+      r.addEventListener("change", function () {
+        if (r.name === "worked_dc" && r.value === "No") return;
+        setTimeout(goNext, 260);
+      });
+    });
+  }
+
+  $all("[data-goto-form]").forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      e.preventDefault();
+      document.getElementById("check").scrollIntoView({ behavior: reduced() ? "auto" : "smooth", block: "start" });
+      setTimeout(function () { var f = form.querySelector('[name="worked_dc"]'); if (f) f.focus({ preventScroll: true }); }, 350);
+    });
+  });
+
+  function checkedValues(name) { return $all('input[name="' + name + '"]:checked', form).map(function (i) { return i.value; }); }
+  function buildPayload() {
+    var params = {};
+    try {
+      var q = new URLSearchParams(window.location.search);
+      ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid"].forEach(function (k) { if (q.get(k)) params[k] = q.get(k); });
+    } catch (e) { /* no query string */ }
+    return {
+      campaign: CONFIG.campaign,
+      page_variant: CONFIG.variant,
+      submitted_at: new Date().toISOString(),
+      answers: {
+        worked_dc: val("worked_dc"),
+        pay_type: val("pay_type"),
+        ot_hours: val("ot_hours"),
+        extra_pay: checkedValues("extra_pay"),
+        state: val("state")
+      },
+      contact: {
+        full_name: form.elements["full_name"].value.trim(),
+        phone: digits(form.elements["phone"].value),
+        email: form.elements["email"].value.trim(),
+        employer: employerNS.checked ? "Not sure" : employer.value.trim()
+      },
+      consent: { agreed: form.elements["consent"].checked, text: document.getElementById("consent-text").textContent },
+      tracking: params,
+      page_url: window.location.href.split("?")[0]
+    };
+  }
+
+  function showStatus(kind, html) { statusEl.className = "form-status " + kind; statusEl.innerHTML = html; statusEl.hidden = false; }
+  function setSending(on) {
+    sending = on;
+    submitBtn.disabled = on;
+    submitBtn.setAttribute("aria-busy", on ? "true" : "false");
+    submitBtn.querySelector(".label").textContent = on ? "Sending…" : SUBMIT_LABEL;
+  }
+  function callLine() { return CONFIG.phone ? " You can also call the firm at <strong>" + CONFIG.phone + "</strong>." : ""; }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (sending) return;
+    statusEl.hidden = true;
+    var bad = validate(Object.keys(RULES));
+    if (bad) { showStatus("error", "Please fix the highlighted answers above."); focusField(bad); return; }
+    var hp = form.elements["company_website"];
+    if (hp && hp.value) return;
+    if (!CONFIG.leadEndpoint) {
+      showStatus("error", "Online requests are not connected yet, so nothing was sent." + callLine());
+      if (window.console) console.warn("LP_CONFIG.leadEndpoint is empty: set it to the lead-delivery URL.");
+      return;
+    }
+    setSending(true);
+    var ctrl = ("AbortController" in window) ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, CONFIG.timeoutMs || 15000);
+    fetch(CONFIG.leadEndpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(buildPayload()),
+      signal: ctrl ? ctrl.signal : undefined
+    }).then(function (res) {
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return res.text().then(function (t) {
+        var data = null;
+        try { data = t ? JSON.parse(t) : null; } catch (err) { data = null; }
+        if (data && data.ok === false) throw new Error("Rejected");
+        return data;
+      });
+    }).then(function () {
+      clearTimeout(timer);
+      form.hidden = true;
+      successEl.hidden = false;
+      var h = successEl.querySelector("h3");
+      if (h) { h.setAttribute("tabindex", "-1"); h.focus(); }
+      if (typeof CONFIG.onConfirmed === "function") { try { CONFIG.onConfirmed(); } catch (err) { /* tracking must not break the page */ } }
+    }).catch(function () {
+      clearTimeout(timer);
+      setSending(false);
+      showStatus("error", "Your request could not be confirmed as sent, so please try again." + callLine());
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
