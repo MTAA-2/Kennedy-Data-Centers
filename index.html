@@ -1,138 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Data Center Workers: Overtime Check (Version A)</title>
-<meta name="robots" content="noindex, nofollow">
+<title>Data Center Workers: Overtime Check | Kennedy Law Firm</title>
+<meta name="description" content="Worked on a data center project? Got bonuses, per diem, or shift pay while working overtime? You might be owed more money. Check your overtime pay — free, takes about 60 seconds.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<style>
-:root {
-  /* Version A, straight talk: warm cream page, charcoal ink, safety-orange action color, yellow highlighter, peach bands. */
-  --paper: #fffaf2;
-  --ink: #23262b;
-  --muted: #5b5f66;
-  --accent: #d9480f;
-  --accent-dark: #b33a0b;
-  --focus: rgba(217, 72, 15, .22);
-  --band: #ffe3cf;
-  --opt: #fff1e3;
-  --opt-line: #f2c49f;
-  --field: #ffffff;
-  --line: #c9b9a6;
-  --rule: #ecdccb;
-  --qn-bg: #ffd166;
-  --qn-ink: #23262b;
-  --error: #b42318;
-  color-scheme: light;
-}
-* { box-sizing: border-box; }
-[hidden] { display: none !important; }
-body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Inter", system-ui, -apple-system, "Segoe UI", Arial, sans-serif; font-size: 17px; line-height: 1.55; }
-a { color: var(--accent-dark); }
-:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-.wrap { max-width: 760px; margin: 0 auto; padding: 0 20px; }
-.topbar { border-bottom: 1px solid var(--rule); background: #fff; }
-.topbar .wrap { display: flex; justify-content: space-between; align-items: center; min-height: 52px; gap: 12px; }
-.firm { font-weight: 700; letter-spacing: .06em; text-transform: uppercase; font-size: 13px; }
-.topbar a { font-weight: 700; text-decoration: none; white-space: nowrap; }
-.hero { padding: 16px 0 8px; }
-.hero .photo { aspect-ratio: 21 / 9; }
-@media (min-width: 760px) { .hero .photo { aspect-ratio: 2 / 1; } }
-h1 { font-family: "Archivo", "Inter", sans-serif; font-weight: 800; font-size: clamp(32px, 8.6vw, 52px); line-height: 1.05; margin: 16px 0 0; letter-spacing: -.01em; }
-h1 .l2 { display: block; margin-top: 10px; font-size: .78em; line-height: 1.15; }
-h1 mark { color: inherit; padding: .02em .28em .08em; margin: 0 -.12em; border-radius: .8em .3em .9em .35em / .45em .8em .35em .7em;
-  background: linear-gradient(100deg, rgba(255,205,40,0) .8%, rgba(255,205,40,.9) 2.6%, rgba(255,215,70,.75) 6%, rgba(255,215,70,.5) 92%, rgba(255,205,40,.85) 96.5%, rgba(255,205,40,0) 99%);
-  -webkit-box-decoration-break: clone; box-decoration-break: clone; }
-.sub { font-size: 19px; margin: 16px 0 0; max-width: 40ch; }
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 58px; padding: 14px 26px; border: 0; border-radius: 10px; background: var(--accent); color: #fff; font: inherit; font-weight: 700; font-size: 19px; text-decoration: none; cursor: pointer; }
-.btn:hover { background: var(--accent-dark); }
-.btn[disabled] { opacity: .75; cursor: wait; }
-.hero .btn { margin-top: 20px; }
-.meta { margin: 10px 0 0; color: var(--muted); font-size: 15px; text-align: center; }
-.block { padding: 26px 0; }
-.block h2 { font-family: "Archivo", "Inter", sans-serif; font-weight: 800; font-size: 26px; line-height: 1.2; margin: 0 0 14px; background: var(--band); padding: 10px 16px; border-radius: 10px; }
-.paylist { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
-.paylist li { display: grid; grid-template-columns: 30px 1fr; gap: 10px; align-items: start; background: var(--opt); border: 1px solid var(--opt-line); border-radius: 10px; padding: 14px 16px; }
-.paylist svg { width: 26px; height: 26px; stroke: var(--accent); fill: none; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; margin-top: 1px; }
-.paylist strong { display: block; font-size: 19px; }
-.paylist span { color: var(--muted); font-size: 16px; }
-.why { margin: 16px 0 0; font-size: 17px; }
-.who { margin: 0; font-size: 17px; }
-.steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
-.steps li { display: grid; grid-template-columns: 44px 1fr; gap: 12px; align-items: center; }
-.steps .num { width: 44px; height: 44px; border-radius: 50%; background: var(--qn-bg); display: grid; place-items: center; font-family: "Archivo", sans-serif; font-weight: 800; font-size: 21px; }
-.progress { height: 8px; background: var(--opt); border-radius: 99px; margin: 4px 0 6px; overflow: hidden; }
-.progress .bar { height: 100%; width: 16%; background: var(--accent); border-radius: 99px; transition: width .25s; }
-.progress-text { margin: 0; font-size: 14px; color: var(--muted); font-weight: 600; }
-#check .q { padding: 14px 0 0; border: 0; }
-#check .ql { font-size: 21px; font-weight: 800; }
-.help { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
-.opts { display: grid; gap: 10px; margin-top: 12px; }
-.opt { display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 12px 16px; border: 1.5px solid var(--opt-line); border-radius: 10px; background: var(--opt); cursor: pointer; font-size: 18px; font-weight: 600; }
-.opt:hover { border-color: var(--accent); }
-.opt input { width: 22px; height: 22px; accent-color: var(--accent); flex: 0 0 22px; margin: 0; }
-.opt:has(input:checked) { border-color: var(--accent); background: #ffd9bd; }
-.nav-row { display: flex; gap: 10px; margin-top: 18px; }
-.nav-row .btn { flex: 1; }
-.btn.ghost { flex: 0 0 auto !important; background: #fff; color: var(--ink); border: 1.5px solid var(--line); }
-#check .contact { border-top: 0; padding-top: 14px; }
-#check { scroll-margin-top: 10px; }
-form { margin-top: 10px; }
-.q { padding: 16px 0 16px 48px; border-top: 1px solid var(--rule); position: relative; }
-.q .qn { position: absolute; left: 0; top: 18px; width: 34px; height: 34px; border-radius: 50%; background: var(--qn-bg); color: var(--qn-ink); display: grid; place-items: center; font-weight: 700; font-size: 17px; }
-.ql { display: block; font-weight: 700; font-size: 18px; line-height: 1.35; padding-top: 4px; }
-.txt { width: 100%; min-height: 50px; font: inherit; font-size: 17px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); background: var(--field); }
-.txt:focus, select:focus { border-color: var(--accent) !important; outline: none; box-shadow: 0 0 0 3px var(--focus); }
-.txt:disabled { color: #8a8f98; }
-select { width: 100%; max-width: 440px; margin-top: 10px; min-height: 50px; font: inherit; font-size: 17px; color: var(--ink); padding: 10px 44px 10px 14px; appearance: none; -webkit-appearance: none; background-color: var(--opt); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; background-size: 20px; border: 1px solid var(--opt-line); border-radius: 8px; cursor: pointer; }
-select.empty { color: var(--muted); }
-.dd { margin-top: 10px; max-width: 440px; }
-.dd summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 50px; padding: 10px 14px; border: 1px solid var(--opt-line); border-radius: 8px; background: var(--opt); cursor: pointer; font-size: 17px; }
-.dd summary::-webkit-details-marker { display: none; }
-.dd summary::after { content: ""; flex: 0 0 20px; height: 20px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") center / 20px no-repeat; transition: transform .15s; }
-.dd[open] summary::after { transform: rotate(180deg); }
-.dd .dd-text { color: var(--muted); }
-.dd.has-value .dd-text { color: var(--ink); font-weight: 600; }
-.dd-panel { margin-top: 6px; border: 1px solid var(--opt-line); border-radius: 8px; background: #fff; padding: 6px; box-shadow: 0 10px 24px rgba(0,0,0,.10); display: grid; gap: 2px; }
-.dd-panel label { display: flex; align-items: center; gap: 10px; min-height: 46px; padding: 8px 10px; border-radius: 6px; font-size: 16px; cursor: pointer; }
-.dd-panel label:hover, .dd-panel label:has(input:checked) { background: var(--opt); }
-.dd-panel input, .consent input, .inline-check input { width: 20px; height: 20px; accent-color: var(--accent); flex: 0 0 20px; margin: 0; }
-.dd-done { margin: 4px 0 2px; min-height: 44px; border: 0; border-radius: 6px; background: var(--accent); color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
-.invalid select, .invalid .txt, .invalid .dd summary { border-color: var(--error) !important; }
-.contact { border-top: 1px solid var(--rule); padding: 20px 0 6px; }
-.contact h3 { margin: 0 0 4px; font-size: 19px; }
-.grid2 { display: grid; gap: 14px; margin-top: 12px; }
-.field label { display: block; font-weight: 600; font-size: 15px; margin-bottom: 6px; }
-.inline-check { display: inline-flex !important; align-items: center; gap: 8px; font-weight: 500 !important; margin-top: 8px; }
-.consent { display: flex; gap: 10px; align-items: flex-start; margin-top: 18px; font-size: 15px; }
-.consent input { margin-top: 3px; }
-.fine { font-size: 14px; color: var(--muted); margin: 10px 0 0; }
-.err { color: var(--error); font-weight: 600; font-size: 15px; margin-top: 6px; }
-.err:empty { display: none; }
-.note { margin: 10px 0 0; padding: 10px 14px; background: #fff6e0; border: 1px solid #f0d58a; border-radius: 6px; font-weight: 500; }
-.submit-row { margin-top: 20px; }
-.form-status { margin-top: 14px; padding: 12px 14px; border-radius: 6px; font-weight: 500; }
-.form-status.error { background: #fdecea; border: 1px solid #f3b7b0; color: #7a1a12; }
-.config-flag { display: inline-block; margin-left: 6px; font-size: 12px; font-weight: 700; background: #fff6e0; color: #6b4e00; padding: 1px 6px; border-radius: 4px; }
-.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
-.success { border: 1px solid var(--rule); border-left: 4px solid #1d7a4f; background: #f1f8f4; padding: 18px 20px; border-radius: 6px; margin-top: 18px; }
-.success h3 { margin: 0 0 6px; font-size: 22px; }
-.success p { margin: 0; }
-.photo { margin: 0; border-radius: 14px; overflow: hidden; background: var(--opt); aspect-ratio: 3 / 2; position: relative; }
-.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.photo.noimg::after { content: "Photo goes here"; position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-weight: 600; border: 2px dashed var(--opt-line); border-radius: 14px; }
-.photo.noimg img { display: none; }
-footer { padding: 26px 0 44px; font-size: 13.5px; color: var(--muted); line-height: 1.55; border-top: 1px solid var(--rule); margin-top: 20px; }
-footer p { margin: 0 0 8px; max-width: 90ch; }
-footer strong { color: var(--ink); }
-@media (min-width: 760px) { .grid2 { grid-template-columns: 1fr 1fr; } }
-.linkbtn { background: none; border: 0; padding: 0; font: inherit; color: var(--accent); font-weight: 600; cursor: pointer; text-decoration: underline; }
-.back-note { margin: 0 0 6px; }
-
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
 <!-- MTAA CIPA Block — must come FIRST -->
 <script src="https://geo.mtaa.ai/block.js"></script>
 <!-- Meta Pixel Code -->
@@ -145,465 +21,621 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', "249210042119489");
+fbq('init', "1238664640565416");
 fbq('track', "ViewContent");
 </script>
 <noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=249210042119489&ev=ViewContent&noscript=1"
+src="https://www.facebook.com/tr?id=1238664640565416&ev=ViewContent&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
 </head>
 <body>
-<header class="topbar">
-  <div class="wrap"><img src="KENNEDY-logo.webp" width="450px" alt="Kennedy logo">
-    <a href="tel:+17134256445" aria-label="Call Kennedy Law Firm at 713-425-6445"><strong>713-425-6445</strong></a>
+
+<!-- ============ TOP UTILITY BAR ============ -->
+<div class="topbar">
+  <div class="container topbar-inner">
+    <span class="topbar-trust">
+      <strong>Free Case Review</strong>
+      <span class="dot" aria-hidden="true">&middot;</span>
+      100% Confidential
+    </span>
+  </div>
+</div>
+
+<!-- ============ HEADER / LOGO ============ -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="/">
+   <!-- Logo file: drop KENNEDY-logo.webp (from overtimejusticehelp.com) into this folder -->
+   <img class="logo-size" src="KENNEDY-logo.webp" alt="Kennedy Law Firm, LLP"> </a>
+    <a class="header-phone" href="tel:+17134256445">713-425-6445</a>
   </div>
 </header>
 
-<main class="wrap">
-  <section class="hero">
-    <figure class="photo"><img src="hero-a.jpg" alt="Workers installing cable and conduit inside a data center under construction" onerror="this.parentNode.classList.add('noimg')"></figure>
-    <h1>Worked on a Data Center Project? <span class="l2"><mark>You Might Be Missing Overtime Pay.</mark></span></h1>
-    <p class="sub">Got bonuses, per diem, or shift pay while working overtime? You might be owed more money.</p>
-    <a class="btn" href="#check" data-goto-form>Check My Overtime Pay</a>
-    <p class="meta">Takes about 60 seconds. Current and former workers. Confidential.</p>
-  </section>
-
-  <section class="block" id="check" aria-labelledby="form-h">
-    <h2 id="form-h">Five quick questions</h2>
-    <div class="progress" aria-hidden="true"><div class="bar" id="progress-bar"></div></div>
-    <p class="progress-text" id="progress-text">Question 1 of 5</p>
-    <form id="screen-form" novalidate>
-      <div class="q" data-step data-field="worked_dc">
-        <span class="ql" id="worked_dc-l">Have you worked on a data center project?</span>
-        <div class="opts" role="radiogroup" aria-labelledby="worked_dc-l">
-            <label class="opt" for="worked_dc-0"><input type="radio" name="worked_dc" id="worked_dc-0" value="Yes, now">Yes, I'm on one now</label>
-            <label class="opt" for="worked_dc-1"><input type="radio" name="worked_dc" id="worked_dc-1" value="Yes, last 3 years">Yes, in the last 3 years</label>
-            <label class="opt" for="worked_dc-2"><input type="radio" name="worked_dc" id="worked_dc-2" value="Yes, over 3 years ago">Yes, more than 3 years ago</label>
-            <label class="opt" for="worked_dc-3"><input type="radio" name="worked_dc" id="worked_dc-3" value="No">No</label>
-        </div>
-        <p class="note" id="q1-note" hidden>This check is only for people who have worked on a data center project.</p>
-        <div class="err" role="alert"></div>
-      </div>
-      <div class="q" data-step data-field="pay_type">
-        <span class="ql" id="pay_type-l">How were you paid?</span>
-        <div class="opts" role="radiogroup" aria-labelledby="pay_type-l">
-            <label class="opt" for="pay_type-0"><input type="radio" name="pay_type" id="pay_type-0" value="Hourly">By the hour</label>
-            <label class="opt" for="pay_type-1"><input type="radio" name="pay_type" id="pay_type-1" value="Day rate">Day rate</label>
-            <label class="opt" for="pay_type-2"><input type="radio" name="pay_type" id="pay_type-2" value="Salary">Salary</label>
-            <label class="opt" for="pay_type-3"><input type="radio" name="pay_type" id="pay_type-3" value="Not sure">Not sure</label>
-        </div>
-        <div class="err" role="alert"></div>
-      </div>
-      <div class="q" data-step data-field="ot_hours">
-        <span class="ql" id="ot_hours-l">Did you work more than 40 hours in a week?</span>
-        <div class="opts" role="radiogroup" aria-labelledby="ot_hours-l">
-            <label class="opt" for="ot_hours-0"><input type="radio" name="ot_hours" id="ot_hours-0" value="Most weeks">Most weeks</label>
-            <label class="opt" for="ot_hours-1"><input type="radio" name="ot_hours" id="ot_hours-1" value="Some weeks">Some weeks</label>
-            <label class="opt" for="ot_hours-2"><input type="radio" name="ot_hours" id="ot_hours-2" value="Rarely or never">Rarely or never</label>
-            <label class="opt" for="ot_hours-3"><input type="radio" name="ot_hours" id="ot_hours-3" value="Not sure">Not sure</label>
-        </div>
-        <div class="err" role="alert"></div>
-      </div>
-      <div class="q" data-step data-field="extra_pay">
-        <span class="ql" id="q4-label">Did you get any extra pay, like a bonus or per diem?</span>
-        <p class="help">Pick all that apply, then tap Next.</p>
-        <div class="opts" role="group" aria-labelledby="q4-label">
-            <label class="opt" for="q4-bonus"><input type="checkbox" name="extra_pay" data-group="extra_pay" id="q4-bonus" value="Bonus">Bonus</label>
-            <label class="opt" for="q4-perdiem"><input type="checkbox" name="extra_pay" data-group="extra_pay" id="q4-perdiem" value="Per diem">Per diem</label>
-            <label class="opt" for="q4-shift"><input type="checkbox" name="extra_pay" data-group="extra_pay" id="q4-shift" value="Shift differential">Shift differential</label>
-            <label class="opt" for="q4-other"><input type="checkbox" name="extra_pay" data-group="extra_pay" id="q4-other" value="Other incentive pay">Other incentive pay</label>
-            <label class="opt" for="q4-none"><input type="checkbox" name="extra_pay" data-group="extra_pay" data-exclusive="true" id="q4-none" value="None">None</label>
-            <label class="opt" for="q4-ns"><input type="checkbox" name="extra_pay" data-group="extra_pay" data-exclusive="true" id="q4-ns" value="Not sure">Not sure</label>
-        </div>
-        <div class="err" role="alert"></div>
-      </div>
-      <div class="q" data-step data-field="state">
-        <span class="ql" id="state-l">What state was the project in?</span>
-        <div class="opts" role="radiogroup" aria-labelledby="state-l">
-            <label class="opt" for="state-0"><input type="radio" name="state" id="state-0" value="Arizona">Arizona</label>
-            <label class="opt" for="state-1"><input type="radio" name="state" id="state-1" value="Georgia">Georgia</label>
-            <label class="opt" for="state-2"><input type="radio" name="state" id="state-2" value="Illinois">Illinois</label>
-            <label class="opt" for="state-3"><input type="radio" name="state" id="state-3" value="Indiana">Indiana</label>
-            <label class="opt" for="state-4"><input type="radio" name="state" id="state-4" value="Ohio">Ohio</label>
-            <label class="opt" for="state-5"><input type="radio" name="state" id="state-5" value="Pennsylvania">Pennsylvania</label>
-            <label class="opt" for="state-6"><input type="radio" name="state" id="state-6" value="Texas">Texas</label>
-            <label class="opt" for="state-7"><input type="radio" name="state" id="state-7" value="Virginia">Virginia</label>
-            <label class="opt" for="state-8"><input type="radio" name="state" id="state-8" value="Other">Another state</label>
-        </div>
-        <div class="err" role="alert"></div>
-      </div>
-      <div class="contact" data-step>
-        <h3>Your contact information</h3>
-        <div class="grid2">
-          <div class="field" data-field="full_name">
-            <label for="full_name">Full name</label>
-            <input class="txt" type="text" id="full_name" name="full_name" autocomplete="name">
-            <div class="err" role="alert"></div>
-          </div>
-          <div class="field" data-field="phone">
-            <label for="phone">Mobile phone</label>
-            <input class="txt" type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="(555) 555-0123">
-            <div class="err" role="alert"></div>
-          </div>
-          <div class="field" data-field="email">
-            <label for="email">Email</label>
-            <input class="txt" type="email" id="email" name="email" autocomplete="email" inputmode="email" placeholder="name@example.com">
-            <div class="err" role="alert"></div>
-          </div>
-          <div class="field" data-field="employer">
-            <label for="employer">Company that paid you</label>
-            <input class="txt" type="text" id="employer" name="employer" autocomplete="organization">
-            <label class="inline-check" for="employer_not_sure"><input type="checkbox" id="employer_not_sure" name="employer_not_sure">Not sure</label>
-            <div class="err" role="alert"></div>
-          </div>
-        </div>
-        <div class="hp" aria-hidden="true">
-          <label for="company_website">Leave this empty</label>
-          <input type="text" id="company_website" name="company_website" tabindex="-1" autocomplete="off">
-        </div>
-        <div data-field="consent">
-          <div class="consent">
-            <input type="checkbox" id="consent" name="consent">
-            <label for="consent" id="consent-text">I agree that Kennedy Law Firm may contact me by phone, text, or email about this request. Message and data rates may apply.</label>
-          </div>
-          <div class="err" role="alert"></div>
-        </div>
-        <p class="fine">See the <a id="privacy-link" href="#privacy-policy">Privacy Policy</a>. Your information will be sent to Kennedy Law Firm, LLP for review. Submitting this form does not create an attorney-client relationship or enroll you in a lawsuit.</p>
-      </div>
-
-      <div class="nav-row">
-        <button type="button" class="btn ghost" id="back-btn" hidden>Back</button>
-        <button type="button" class="btn" id="next-btn">Next</button>
-        <button type="submit" class="btn" id="submit-btn" hidden><span class="label">See If I Qualify</span></button>
-      </div>
-      <div class="form-status" id="form-status" role="status" aria-live="polite" hidden></div>
-    </form>
-
-    <div class="success" id="success" hidden>
-      <h3>Request received</h3>
-      <p>Kennedy Law Firm has your information. The firm will review it and may contact you by phone, text, or email.</p>
+<!-- ============ HERO ============ -->
+<section class="hero section-parallax">
+  <div class="container hero-inner">
+    <div class="hero-copy">
+      <p class="hero-eyebrow">Data Center Overtime Pay</p>
+      <h1 class="hero-title">Worked on a Data Center Project? <span class="l2"><mark>You Might Be Missing Overtime Pay.</mark></span></h1>
+      <p class="hero-sub">Got bonuses, per diem, or shift pay while working overtime? You might be owed more money.</p>
+      <ul class="hero-badges">
+        <li>Takes about 60 seconds</li>
+        <li>No cost to check</li>
+      </ul>
     </div>
 
-  </section>
+    <!-- ============ FORM (IFRAME EMBED, OVERFLOW CARD) ============ -->
+    <div class="hero-form" id="form">
+      <h2 class="form-heading">Check My Overtime Pay</h2>
+      <p class="form-sub">Takes about 60 seconds. No cost to check.</p>
+      <div class="form-frame">
+        <script>
+(function () {
+  "use strict";
+  var config = {"url":"https://forms.mtaa.ai/f/nf_3270a8a1b0e4425cb70e9f97f2fa5a3c?embed=1","formId":18,"title":"Form"};
+  var script = document.currentScript;
+  if (!script || !script.parentNode) return;
+  var url = new URL(config.url);
+  var origin = url.origin;
+  url.searchParams.set("parentOrigin", window.location.origin);
+  // The form is the reason the visitor is on this page, so it is never lazy:
+  // a deferred iframe costs the whole shell round trip after layout. The
+  // preconnect gets the TLS handshake out of the way while the page paints.
+  var preconnect = document.createElement("link");
+  preconnect.rel = "preconnect";
+  preconnect.href = origin;
+  var frame = document.createElement("iframe");
+  frame.src = url.toString();
+  frame.title = config.title;
+  frame.width = "100%";
+  frame.height = "720";
+  frame.style.border = "0";
+  frame.style.display = "block";
+  frame.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+  var session = null;
+  var submitted = false;
+  var rechecking = false;
+  function cleanUrl(value) {
+    try {
+      var parsed = new URL(value);
+      if (parsed.protocol !== "https:" && parsed.protocol !== "http:") return null;
+      var clean = parsed.origin + parsed.pathname;
+      return clean.length <= 2048 ? clean : null;
+    } catch (_) { return null; }
+  }
+  // One id for this page session, reused by the browser event and by the
+  // server's Conversions API copy of it. A UUID when the browser can make one,
+  // 32 random hex characters when it only has getRandomValues, and a
+  // Math.random string on the oldest browsers: an id that is merely unlikely to
+  // repeat still beats no event at all.
+  function eventBase() {
+    var api = window.crypto;
+    try {
+      if (api && typeof api.randomUUID === "function") {
+        var uuid = api.randomUUID();
+        if (typeof uuid === "string" && /^[A-Za-z0-9-]{8,64}$/.test(uuid)) return uuid;
+      }
+      if (api && typeof api.getRandomValues === "function" && typeof Uint8Array === "function") {
+        var bytes = api.getRandomValues(new Uint8Array(16));
+        var hex = "";
+        for (var index = 0; index < bytes.length; index += 1) hex += (bytes[index] + 256).toString(16).slice(-2);
+        if (/^[a-f0-9]{32}$/.test(hex)) return hex;
+      }
+    } catch (_) { /* fall through to the arithmetic fallback */ }
+    var random = "";
+    while (random.length < 32) random += ("0000000" + Math.floor(Math.random() * 4294967296).toString(16)).slice(-8);
+    return random.slice(0, 32);
+  }
+  function cookieValue(name) {
+    // A hardened host page can make cookie access throw outright. The lead
+    // still has to be reported, just without Meta's own cookies.
+    var jar = "";
+    try { jar = typeof document.cookie === "string" ? document.cookie : ""; } catch (_) { jar = ""; }
+    var parts = jar.split(";");
+    for (var index = 0; index < parts.length; index += 1) {
+      var separator = parts[index].indexOf("=");
+      if (separator < 1 || parts[index].slice(0, separator).trim() !== name) continue;
+      var value = parts[index].slice(separator + 1).trim();
+      return value.length > 0 && value.length <= 512 ? value : null;
+    }
+    return null;
+  }
+  function blocked() {
+    return window.__MTAA_PIXEL_BLOCKED === true;
+  }
+  // A blocked visitor is never given a cookie of ours, first-party or not, and
+  // nothing new is read from their jar either: their state stays exactly what
+  // it was before this generation existed.
+  // Only an id shaped like an id is stored. A click id is a URL parameter, and
+  // one carrying a semicolon would otherwise write the attributes after it: an
+  // exotic click still travels in the attribution, it just is not persisted.
+  function writeCookie(name, value) {
+    if (blocked() || !/^[A-Za-z0-9._-]{1,512}$/.test(value)) return;
+    try {
+      document.cookie = name + "=" + value + "; Max-Age=7776000; Path=/; SameSite=Lax"
+        + (window.location.protocol === "https:" ? "; Secure" : "");
+    } catch (_) {
+      // A hardened page simply keeps no id of its own.
+    }
+  }
+  var ownBrowserId = null;
+  var ownClickId = null;
+  // Meta's own browser id when the pixel wrote one; the id we kept from an
+  // earlier visit next; and otherwise one in Meta's own format, stored first
+  // party. The built value is remembered so a page that refuses the cookie
+  // still reports one id for the visit instead of a new one each time.
+  function browserCookie() {
+    var stored = cookieValue("_fbp");
+    if (stored) return stored;
+    if (blocked()) return null;
+    var kept = cookieValue("mtaa_fbp");
+    if (kept) return kept;
+    if (ownBrowserId) return ownBrowserId;
+    var digits = "";
+    while (digits.length < 10) digits += String(Math.floor(Math.random() * 10));
+    ownBrowserId = "fb.1." + Date.now() + "." + digits;
+    writeCookie("mtaa_fbp", ownBrowserId);
+    return ownBrowserId;
+  }
+  // Meta's own click cookie when it exists; otherwise the one the pixel would
+  // have written for this click, in the same format and timestamped now, now
+  // also kept first party so a return visit still carries the click.
+  function clickCookie(landing) {
+    var stored = cookieValue("_fbc");
+    if (stored) return stored;
+    var kept = blocked() ? null : cookieValue("mtaa_fbc");
+    if (kept) return kept;
+    if (ownClickId) return ownClickId;
+    var clickId = landing.searchParams.get("fbclid");
+    if (!clickId) return null;
+    var built = "fb.1." + Date.now() + "." + clickId;
+    if (built.length > 512) return null;
+    ownClickId = built;
+    writeCookie("mtaa_fbc", built);
+    return built;
+  }
+  var eventId = eventBase();
+  function attribution() {
+    var result = {};
+    var landing = new URL(window.location.href);
+    var clean = cleanUrl(landing.href);
+    if (clean) result.landingUrl = clean;
+    var referrer = cleanUrl(document.referrer);
+    if (referrer) result.referrer = referrer;
+    ["source", "medium", "campaign", "term", "content"].forEach(function (key) {
+      var value = landing.searchParams.get("utm_" + key);
+      if (value && value.length <= 2048) result[key] = value;
+    });
+    // The pixel carriers travel as ordinary click ids: the event id this page
+    // will report, the browser and click ids, the compliance block flag,
+    // whether the host page could fire its browser pixel, and this snippet's
+    // own generation.
+    // They go in FIRST: the iframe runtime keeps only the first twenty click
+    // ids, and these six are the ones that must never be the entries dropped.
+    var clicks = {};
+    clicks.mtaa_eid = eventId;
+    var browserId = browserCookie();
+    if (browserId) clicks.fbp = browserId;
+    var clickId = clickCookie(landing);
+    if (clickId) clicks.fbc = clickId;
+    if (blocked()) clicks.mtaa_pixel_blocked = "1";
+    // Record whether this host page could fire its own browser pixel.
+    clicks.mtaa_fbq = (!blocked() && typeof window.fbq === "function") ? "1" : "0";
+    // Which snippet this page has pasted, so a lead whose events look wrong can
+    // be traced to a landing page that needs re-copying.
+    clicks.mtaa_v = "3";
+    // The last six are Facebook's campaign, adset and ad ids in both spellings
+    // the ad templates use. An Unbounce page carries them as hidden inputs; a
+    // native form has none, so the landing URL is the only place they exist and
+    // the lead's source_campaign/adset/ad columns stay empty without them.
+    ["gclid", "fbclid", "msclkid", "cid", "campaign_id", "asid", "adset_id", "aid", "ad_id"].forEach(function (key) {
+      var value = landing.searchParams.get(key);
+      if (value && value.length <= 512) clicks[key] = value;
+    });
+    if (Object.keys(clicks).length) result.clickIds = clicks;
+    return result;
+  }
+  function trackLead(outcome) {
+    if (blocked() || typeof window.fbq !== "function") return;
+    try {
+      window.fbq("track", "Lead", {}, { eventID: eventId });
+      if (outcome === "fql") window.fbq("trackCustom", "QualifiedLead", {}, { eventID: eventId + "_q" });
+    } catch (_) {
+      // A broken host pixel must never reach the lander or the form.
+    }
+  }
+  // The events the FORM named, each on the id of its own moment, so the
+  // server's Conversions API copy pairs with it whatever name was chosen.
+  function trackEvents(events, value, currency) {
+    if (blocked() || typeof window.fbq !== "function") return;
+    try {
+      for (var index = 0; index < events.length; index += 1) {
+        var entry = events[index];
+        var data = entry.name === "Purchase" ? { value: value, currency: currency } : {};
+        window.fbq(entry.standard ? "track" : "trackCustom", entry.name, data, { eventID: eventId + entry.suffix });
+      }
+    } catch (_) {
+      // A broken host pixel must never reach the lander or the form.
+    }
+  }
+  // Only the moments the runtime can post, and only with the names that moment
+  // may carry: a page may not be talked into firing an arbitrary event, nor the
+  // same moment twice, by anything that gets a message past the origin and
+  // session checks. "" is the submitted moment and "_q" the qualified one.
+  var MOMENT_NAMES = { "": ["Lead"], _q: ["QualifiedLead", "SubmitApplication", "Purchase"] };
+  function plannedEvents(data) {
+    var events = data.events;
+    if (!Array.isArray(events) || events.length < 1 || events.length > 2) return null;
+    var purchase = false;
+    var moments = [];
+    for (var index = 0; index < events.length; index += 1) {
+      var entry = events[index];
+      if (!entry || typeof entry !== "object" || Array.isArray(entry) || Object.keys(entry).length !== 3
+        || (entry.suffix !== "" && entry.suffix !== "_q")
+        || moments.indexOf(entry.suffix) >= 0
+        || MOMENT_NAMES[entry.suffix].indexOf(entry.name) < 0
+        || typeof entry.standard !== "boolean"
+        // QualifiedLead is the one custom event; every other name is standard.
+        || entry.standard === (entry.name === "QualifiedLead")) return null;
+      moments.push(entry.suffix);
+      if (entry.name === "Purchase") purchase = true;
+    }
+    var keys = Object.keys(data).length;
+    if (!purchase) return keys === 4 ? events : null;
+    if (keys !== 6 || typeof data.value !== "number" || !Number.isFinite(data.value) || data.value < 0
+      || data.currency !== "USD") return null;
+    return events;
+  }
+  var reported = null;
+  function postAttribution() {
+    // A re-check can fire after the page has taken the form off the DOM, where
+    // the frame no longer has a window to talk to. Nothing this script does may
+    // throw on a client's landing page.
+    if (!frame || !frame.contentWindow) return;
+    var next = attribution();
+    try {
+      frame.contentWindow.postMessage({ type: "mtaa-form:attribution", sessionId: session, attribution: next }, origin);
+      reported = next;
+    } catch (_) {
+      // Nothing was delivered, so the next re-check tries again.
+    }
+  }
+  // A lander's own pixel often initialises after this form has loaded, and the
+  // lead would otherwise be reported without the cookies it then wrote. Only
+  // Meta's own two can change under us; ours are written once and kept.
+  function recheck() {
+    if (submitted || !session) return;
+    var before = (reported && reported.clickIds) || {};
+    var after = attribution().clickIds || {};
+    if (before.fbp === after.fbp && before.fbc === after.fbc) return;
+    postAttribution();
+  }
+  /* mtaa-host:start */
+  var hostOn = true;
+  var hostStarted = false;
+  var hostViewTimer = null;
+  var hostViewObserver = null;
+  var hostViewSeen = false;
+  var hostScrollListener = null;
+  var hostScrollFrame = false;
+  var hostDepth = 0;
+  function hostRun(task) {
+    if (!hostOn) return;
+    try { task(); } catch (_) { hostOn = false; }
+  }
+  function hostPost(message) {
+    if (frame && frame.contentWindow) frame.contentWindow.postMessage(message, origin);
+  }
+  function hostReady() {
+    hostRun(function () {
+      if (hostStarted) return;
+      hostStarted = true;
+      if (window.performance && typeof window.performance.now === "function") {
+        var top = frame.getBoundingClientRect().top + (window.scrollY || 0);
+        hostPost({ type: "mtaa-form:host", e: "host_context", age: Math.round(window.performance.now()), fold: top >= 0 && top <= window.innerHeight });
+      }
+      if (typeof window.IntersectionObserver === "function" && typeof setTimeout === "function" && typeof clearTimeout === "function") {
+        hostViewObserver = new window.IntersectionObserver(function (entries) {
+          hostRun(function () {
+            if (hostViewSeen) return;
+            var visible = entries[0] && entries[0].target === frame && entries[0].intersectionRatio >= 0.5;
+            if (visible && hostViewTimer === null) {
+              hostViewTimer = setTimeout(function () {
+                hostRun(function () {
+                  hostViewTimer = null;
+                  hostViewSeen = true;
+                  if (hostViewObserver) hostViewObserver.disconnect();
+                  hostViewObserver = null;
+                  hostPost({ type: "mtaa-form:host", e: "form_in_view" });
+                });
+              }, 1000);
+            } else if (!visible && hostViewTimer !== null) {
+              clearTimeout(hostViewTimer);
+              hostViewTimer = null;
+            }
+          });
+        }, { threshold: 0.5 });
+        hostViewObserver.observe(frame);
+      }
+      if (typeof window.requestAnimationFrame === "function") {
+        hostScrollListener = function () {
+          hostRun(function () {
+            if (hostScrollFrame) return;
+            hostScrollFrame = true;
+            window.requestAnimationFrame(function () {
+              hostRun(function () {
+                hostScrollFrame = false;
+                var height = document.documentElement.scrollHeight;
+                if (!height) return;
+                var before = hostDepth;
+                hostDepth = Math.max(hostDepth, 100 * ((window.scrollY || 0) + window.innerHeight) / height);
+                [25, 50, 75, 100].forEach(function (depth) {
+                  if (before < depth && hostDepth >= depth) hostPost({ type: "mtaa-form:host", e: "host_scroll", d: depth });
+                });
+                if (hostDepth >= 100) window.removeEventListener("scroll", hostScrollListener);
+              });
+            });
+          });
+        };
+        window.addEventListener("scroll", hostScrollListener, { passive: true });
+        hostScrollListener();
+      }
+    });
+  }
+  /* mtaa-host:end */
+  window.addEventListener("message", function (event) {
+    if (event.origin !== origin || event.source !== frame.contentWindow) return;
+    var data = event.data;
+    if (!data || typeof data !== "object" || Array.isArray(data) || data.formId !== config.formId) return;
+    if (data.type === "mtaa-form:ready") {
+      if (Object.keys(data).length !== 3 || typeof data.sessionId !== "string"
+        || !/^[A-Za-z0-9_-]{8,128}$/.test(data.sessionId)) return;
+      session = data.sessionId;
+      postAttribution();
+      hostReady();
+      // One set of re-checks per page, however many times the form announces
+      // itself: a remounted iframe must not multiply the timers.
+      if (!rechecking && typeof setTimeout === "function") {
+        rechecking = true;
+        setTimeout(recheck, 2000);
+        setTimeout(recheck, 5000);
+        setTimeout(recheck, 15000);
+      }
+    } else if (data.type === "mtaa-form:resize") {
+      if (Object.keys(data).length !== 4 || !session || data.sessionId !== session
+        || typeof data.height !== "number" || !Number.isFinite(data.height) || data.height <= 0) return;
+      frame.height = String(Math.min(10000, Math.max(320, Math.ceil(data.height))));
+      recheck();
+    } else if (data.type === "mtaa-form:meta-events") {
+      if (!session || data.sessionId !== session || submitted) return;
+      var planned = plannedEvents(data);
+      if (!planned) return;
+      submitted = true;
+      trackEvents(planned, data.value, data.currency);
+    } else if (data.type === "mtaa-form:submitted") {
+      // Older published forms post only this message, and a current one posts
+      // it after the plan above. One flag covers both, so a lead is counted
+      // once whichever of them this page understands.
+      if (Object.keys(data).length !== 4 || !session || data.sessionId !== session || submitted
+        || (data.outcome !== "fql" && data.outcome !== "valid_non_fql")) return;
+      submitted = true;
+      trackLead(data.outcome);
+    }
+  });
+  script.parentNode.insertBefore(preconnect, script);
+  script.parentNode.insertBefore(frame, script);
+})();
+</script>
+      </div>
+      <p class="form-privacy">
+        The information you submit will be used solely to evaluate your potential
+        legal claim and to communicate with you about it.
+      </p>
+    </div>
+  </div>
+</section>
 
-  <section class="block" aria-labelledby="pay-h">
-    <h2 id="pay-h">Extra pay that might count</h2>
-    <ul class="paylist">
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg><div><strong>Bonuses</strong><span>Attendance, safety, completion, retention, or sign-on</span></div></li>
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg><div><strong>Per diem and shift pay</strong><span>Especially per diem paid by the hour, and night or weekend differentials</span></div></li>
-    </ul>
-    <p class="why">Under federal law, many bonuses, and some per diem and other extra pay, might need to be counted in your overtime rate. For any hourly trade on a data center project: electricians, laborers, cable and fiber installers, pipefitters, HVAC techs, carpenters, ironworkers, operators, and more. Union or nonunion. Hired direct or through a staffing agency.</p>
-  </section>
+<main class="content">
 
-  <section class="block" aria-labelledby="next-h">
-    <h2 id="next-h">What happens next</h2>
+<!-- EXTRA PAY THAT MIGHT COUNT ================================= -->
+<section class="section" id="extra-pay">
+  <div class="container">
+    <p class="section-kicker">Overtime Rate Check</p>
+    <h2 class="section-title">Extra Pay That <span class="accent">Might Count</span></h2>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3 class="card-title">Bonuses</h3>
+        <p>Attendance, safety, completion, retention, or sign-on</p>
+      </div>
+      <div class="card">
+        <h3 class="card-title">Per Diem and Shift Pay</h3>
+        <p>Especially per diem paid by the hour, and night or weekend differentials</p>
+      </div>
+    </div>
+
+    <p class="lead">
+      Under federal law, many bonuses, and some per diem and other extra pay, might need to be counted in your overtime rate.
+    </p>
+    <p>
+      For any hourly trade on a data center project: electricians, laborers, cable and fiber installers, pipefitters, HVAC techs, carpenters, ironworkers, operators, and more. Union or nonunion. Hired direct or through a staffing agency.
+    </p>
+    <p class="center">
+      <a class="btn btn--cta" href="#form">CHECK MY OVERTIME PAY</a>
+    </p>
+  </div>
+</section>
+
+<!-- DO YOU QUALIFY (parallax) ==================================== -->
+<section class="section section-parallax-law" id="qualify">
+  <div class="container">
+    <p class="section-kicker">Do You Qualify?</p>
+    <h2 class="section-title">You May Qualify <span class="accent">If&hellip;</span></h2>
+    <p>
+      You may have missing overtime pay if the following apply:
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3 class="card-title">You Worked on a Data Center Project</h3>
+        <p>Current or former workers — hourly trade workers, laborers, equipment operators, supervisors and foremen, salaried employees, day-rate, flat weekly pay, or contractor / 1099.</p>
+      </div>
+      <div class="card">
+        <h3 class="card-title">You Worked Overtime</h3>
+        <p>You worked more than 40 hours in a week — most weeks, or some weeks.</p>
+      </div>
+      <div class="card">
+        <h3 class="card-title">You Got Extra Pay</h3>
+        <p>You received a bonus, per diem, shift differential, or other incentive pay while working overtime.</p>
+      </div>
+      <div class="card">
+        <h3 class="card-title">Any Trade, Any Arrangement</h3>
+        <p>Electricians, laborers, cable and fiber installers, pipefitters, HVAC techs, carpenters, ironworkers, operators, and more. Union or nonunion. Hired direct or through a staffing agency.</p>
+      </div>
+    </div>
+
+    <p class="center">
+      <strong>Not Sure If You Qualify?</strong>
+      <br>
+      Every case is different. Even if you don't meet every point above, you may still be owed money.
+    </p>
+    <p class="center">
+      <a class="btn btn--cta" href="#form">CHECK MY OVERTIME PAY</a>
+    </p>
+  </div>
+</section>
+
+<!-- WHAT HAPPENS NEXT =========================================== -->
+<section class="section" id="next-steps">
+  <div class="container">
+    <p class="section-kicker">After You Check</p>
+    <h2 class="section-title">What Happens <span class="accent">Next</span></h2>
     <ol class="steps">
       <li><span class="num">1</span><span>The firm reviews your answers.</span></li>
       <li><span class="num">2</span><span>If your situation might fit, the firm may call, text, or email you to learn more.</span></li>
       <li><span class="num">3</span><span>Any representation would begin only after a separate conversation and a written agreement.</span></li>
     </ol>
-  </section>
+  </div>
+</section>
 
-  <footer>
-    <p><strong>Attorney advertising.</strong> This is an advertisement by Kennedy Law Firm, LLP of Houston, Texas. Galvin Kennedy is responsible for this page. Kennedy Law Firm, LLP, 2925 Richmond Ave., Ste. 1200, Houston, TX 77098. 713-425-6445.</p>
-    <p>This page describes possible claims and does not establish that any employer violated the law. Kennedy Law Firm is not affiliated with any data center owner, contractor, or staffing company.</p>
-    <p>Submitting this form does not create an attorney-client relationship and does not enroll you in any lawsuit.</p>
-    <p>Every case is different. Past results do not guarantee future results, and no one can promise you will recover money.</p>
-  </footer>
+<!-- FAQ =========================================================== -->
+<section class="section" id="coverage">
+  <div class="container">
+    <h2 class="section-title">Frequently <span class="accent">Asked Questions</span></h2>
+
+    <h3>What kind of workers does this cover?</h3>
+    <p>
+      Any hourly trade on a data center project: electricians, laborers, cable and fiber installers, pipefitters, HVAC techs, carpenters, ironworkers, operators, and more. Union or nonunion. Hired direct or through a staffing agency.
+    </p>
+
+    <h3>What extra pay might count toward my overtime rate?</h3>
+    <p>
+      Under federal law, many bonuses, and some per diem and other extra pay, might need to be counted in your overtime rate — including attendance, safety, completion, retention, or sign-on bonuses, per diem paid by the hour, and night or weekend shift differentials.
+    </p>
+
+    <h3>What if I was paid by the day, or worked as a contractor?</h3>
+    <p>
+      The check covers different pay arrangements, including hourly work, day rate, salary, flat weekly pay, and contractor / 1099 work.
+    </p>
+
+    <h3>Does submitting this form enroll me in a lawsuit?</h3>
+    <p>
+      No. Submitting this form does not create an attorney-client relationship and does not enroll you in any lawsuit.
+    </p>
+
+    <h3>What happens after I submit?</h3>
+    <p>
+      Kennedy Law Firm reviews your answers. If your situation might fit, the firm may call, text, or email you to learn more. Any representation would begin only after a separate conversation and a written agreement.
+    </p>
+
+    <h3>Who will review my information?</h3>
+    <p>
+      Kennedy Law Firm, LLP of Houston, Texas. Galvin Kennedy is responsible for this page.
+    </p>
+    <p class="center">
+      <a class="btn btn--cta" href="#form">CHECK MY OVERTIME PAY</a>
+    </p>
+  </div>
+</section>
+
+<!-- FINAL CTA ===================================================== -->
+<section class="section">
+  <div class="container">
+    <p class="section-kicker center">No Cost to Check</p>
+    <h2 class="section-title" style="margin-left: auto; margin-right: auto; text-align: center;">Worked on a Data Center Project?</h2>
+    <p class="lead center" style="margin-left: auto; margin-right: auto;">
+      Got bonuses, per diem, or shift pay while working overtime? You might be owed more money.
+    </p>
+    <p class="center">
+      <a class="btn btn--cta" href="#form">CHECK MY OVERTIME PAY</a>
+    </p>
+  </div>
+</section>
+
 </main>
-<script>
-/* ===== Lead delivery settings: fill these in before launch ===== */
-window.LP_CONFIG = {
-  variant: "A-straight-talk",
-  campaign: "data-center-regular-rate",
-  leadEndpoint: "",   /* HTTPS URL that accepts a JSON POST and answers 2xx after storing the lead */
-  privacyUrl: "",     /* Firm privacy-policy URL */
-  phone: "713-425-6445",
-  timeoutMs: 15000,
-  onConfirmed: null   /* optional: function to fire a Meta Pixel "Lead" event after confirmed receipt */
-};
-</script>
-<script>
-(function () {
-  "use strict";
-  var CONFIG = window.LP_CONFIG || {};
-  var SUBMIT_LABEL = "See If I Qualify";
-  var form = document.getElementById("screen-form");
-  if (!form) return;
-  var statusEl = document.getElementById("form-status");
-  var submitBtn = document.getElementById("submit-btn");
-  var successEl = document.getElementById("success");
-  var sending = false;
 
-  function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
-  function fieldBox(name) { return form.querySelector('[data-field="' + name + '"]'); }
-  function digits(s) { return (s || "").replace(/\D/g, ""); }
-  function reduced() { return matchMedia("(prefers-reduced-motion: reduce)").matches; }
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="container">
 
-  function setError(name, msg) {
-    var box = fieldBox(name); if (!box) return;
-    var err = box.querySelector(".err");
-    box.classList.add("invalid");
-    if (err) err.textContent = msg;
-    $all("input, select", box).forEach(function (el) { el.setAttribute("aria-invalid", "true"); });
-  }
-  function clearError(name) {
-    var box = fieldBox(name); if (!box) return;
-    var err = box.querySelector(".err");
-    box.classList.remove("invalid");
-    if (err) err.textContent = "";
-    $all("input, select", box).forEach(function (el) { el.removeAttribute("aria-invalid"); });
-  }
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3 class="footer-heading">Contact</h3>
+        <!-- Logo file: drop KENNEDY-logo.webp (from overtimejusticehelp.com) into this folder -->
+        <img width="150px" src="KENNEDY-logo.webp" alt="Kennedy Law Firm, LLP">
+        <p class="footer-text">
+          Kennedy Law Firm, LLP<br>
+          2925 Richmond Ave., Ste. 1200, Houston, TX 77098
+        </p>
+        <p class="footer-text">
+          <a class="footer-phone" href="tel:+17134256445">713-425-6445</a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <h3 class="footer-heading">Quick Links</h3>
+        <nav class="footer-nav" aria-label="Footer">
+          <a href="#form">Check Your Overtime Pay</a>
+          <a href="#extra-pay">Extra Pay That Might Count</a>
+          <a href="#qualify">Do You Qualify?</a>
+          <a href="#coverage">Questions Answered</a>
+        </nav>
+      </div>
+      <div class="footer-col">
+        <h3 class="footer-heading">Check Your Overtime Pay</h3>
+        <p class="footer-text">
+          Takes about 60 seconds. No cost to check.
+        </p>
+        <a class="btn btn--small btn--light" href="#form">Check My Overtime Pay</a>
+      </div>
+    </div>
 
-  var privacy = document.getElementById("privacy-link");
-  if (privacy) {
-    if (CONFIG.privacyUrl) { privacy.setAttribute("href", CONFIG.privacyUrl); }
-    else {
-      var mark = document.createElement("span");
-      mark.className = "config-flag";
-      mark.textContent = "privacy URL not set";
-      privacy.parentNode.insertBefore(mark, privacy.nextSibling);
-    }
-  }
+    <div class="disclaimer">
+      <p>
+        <strong>Attorney advertising.</strong> This is an advertisement by Kennedy Law Firm, LLP of Houston, Texas. Galvin Kennedy is responsible for this page. Kennedy Law Firm, LLP, 2925 Richmond Ave., Ste. 1200, Houston, TX 77098. 713-425-6445.
+      </p>
+      <p>
+        This page describes possible claims and does not establish that any employer violated the law. Kennedy Law Firm is not affiliated with any data center owner, contractor, or staffing company.
+      </p>
+      <p>
+        Submitting this form does not create an attorney-client relationship and does not enroll you in any lawsuit.
+      </p>
+      <p>
+        Every case is different. Past results do not guarantee future results, and no one can promise you will recover money.
+      </p>
+    </div>
 
-  $all('input[type="checkbox"][data-group]', form).forEach(function (cb) {
-    cb.addEventListener("change", function () {
-      var group = $all('input[data-group="' + cb.getAttribute("data-group") + '"]', form);
-      if (cb.checked) {
-        if (cb.getAttribute("data-exclusive") === "true") group.forEach(function (o) { if (o !== cb) o.checked = false; });
-        else group.forEach(function (o) { if (o.getAttribute("data-exclusive") === "true") o.checked = false; });
-      }
-      clearError(cb.getAttribute("data-group"));
-    });
-  });
+    <div class="footer-base">
+      <p>&copy; 2026 Kennedy Law Firm, LLP. All rights reserved.</p>
+      <nav class="footer-legal" aria-label="Legal">
+        <a target="blank" href="privacy-policy.html">Privacy Policy</a>
+        <span class="dot" aria-hidden="true">&middot;</span>
+        <a target="blank" href="disclaimer.html">Disclaimer</a>
+      </nav>
+    </div>
 
-  var employer = document.getElementById("employer");
-  var employerNS = document.getElementById("employer_not_sure");
-  employerNS.addEventListener("change", function () {
-    employer.disabled = employerNS.checked;
-    if (employerNS.checked) employer.value = "";
-    clearError("employer");
-  });
-
-  function val(name) {
-    var s = form.querySelector('select[name="' + name + '"]');
-    if (s) return s.value;
-    var r = form.querySelector('input[type="radio"][name="' + name + '"]:checked');
-    return r ? r.value : "";
-  }
-
-  var q1Note = document.getElementById("q1-note");
-  $all('[name="worked_dc"]', form).forEach(function (el) {
-    el.addEventListener("change", function () { q1Note.hidden = val("worked_dc") !== "No"; });
-  });
-
-  $all("select", form).forEach(function (s) {
-    function mark() { s.classList.toggle("empty", !s.value); }
-    s.addEventListener("change", mark); mark();
-  });
-
-  var dds = $all("details.dd", form);
-  function ddRefresh(d) {
-    var picked = $all("input:checked", d).map(function (i) { return i.value; });
-    var txt = d.querySelector(".dd-text");
-    if (!picked.length) { txt.textContent = d.getAttribute("data-placeholder"); d.classList.remove("has-value"); }
-    else { txt.textContent = picked.length <= 2 ? picked.join(", ") : picked.length + " selected"; d.classList.add("has-value"); }
-  }
-  dds.forEach(function (d) {
-    $all("input", d).forEach(function (i) { i.addEventListener("change", function () { ddRefresh(d); }); });
-    var done = d.querySelector(".dd-done");
-    if (done) done.addEventListener("click", function () { d.open = false; d.querySelector("summary").focus(); });
-    ddRefresh(d);
-  });
-  document.addEventListener("click", function (e) {
-    dds.forEach(function (d) { if (d.open && !d.contains(e.target)) d.open = false; });
-  });
-
-  $all("input, select", form).forEach(function (el) {
-    var ev = (el.type === "checkbox" || el.tagName === "SELECT") ? "change" : "input";
-    el.addEventListener(ev, function () {
-      var box = el.closest("[data-field]");
-      if (box && box.classList.contains("invalid")) clearError(box.getAttribute("data-field"));
-    });
-  });
-
-  var RULES = {
-    worked_dc: function () {
-      var v = val("worked_dc");
-      if (!v) return "Choose one.";
-      if (v === "No") return "This check is only for people who have worked on a data center project.";
-      return "";
-    },
-    pay_type: function () { return val("pay_type") ? "" : "Choose one."; },
-    ot_hours: function () { return val("ot_hours") ? "" : "Choose one."; },
-    extra_pay: function () { return form.querySelector('input[name="extra_pay"]:checked') ? "" : "Choose at least one, or None or Not sure."; },
-    state: function () { return val("state") ? "" : "Choose one."; },
-    full_name: function () {
-      var v = (form.elements["full_name"].value || "").trim();
-      return (v.length >= 2 && /[A-Za-zÀ-ɏ]/.test(v)) ? "" : "Enter your full name.";
-    },
-    phone: function () {
-      var d = digits(form.elements["phone"].value);
-      if (d.length === 11 && d.charAt(0) === "1") d = d.slice(1);
-      return d.length === 10 ? "" : "Enter a 10-digit phone number.";
-    },
-    email: function () {
-      var v = (form.elements["email"].value || "").trim();
-      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? "" : "Enter an email address like name@example.com.";
-    },
-    employer: function () {
-      if (employerNS.checked) return "";
-      return (employer.value || "").trim().length >= 2 ? "" : "Enter the company that paid you, or check Not sure.";
-    },
-    consent: function () { return form.elements["consent"].checked ? "" : "Check this box so the firm can contact you."; }
-  };
-
-  function validate(names) {
-    var firstBad = null;
-    names.forEach(function (n) {
-      var msg = RULES[n]();
-      if (msg) { setError(n, msg); if (!firstBad) firstBad = n; } else { clearError(n); }
-    });
-    return firstBad;
-  }
-  function focusField(name) {
-    var box = fieldBox(name); if (!box) return;
-    var dd = box.querySelector("details.dd");
-    var el = dd ? dd.querySelector("summary") : box.querySelector("input:not([disabled]), select");
-    if (steps.length) { var st = box.closest("[data-step]"); var k = steps.indexOf(st); if (k > -1 && k !== current) showStep(k, false); }
-    if (el) el.focus({ preventScroll: true });
-    box.scrollIntoView({ behavior: reduced() ? "auto" : "smooth", block: "center" });
-  }
-
-
-  /* ---------- quiz stepper (only when the form has data-step sections) ---------- */
-  var steps = $all("[data-step]", form);
-  var current = 0;
-  var progressText = document.getElementById("progress-text");
-  var progressBar = document.getElementById("progress-bar");
-  var backBtn = document.getElementById("back-btn");
-  var nextBtn = document.getElementById("next-btn");
-  function fieldsIn(c) { var b = $all("[data-field]", c); if (c.hasAttribute("data-field")) b.unshift(c); return b.map(function (x) { return x.getAttribute("data-field"); }); }
-  function showStep(i, focus) {
-    current = i;
-    steps.forEach(function (s, k) { s.hidden = k !== i; });
-    var total = steps.length;
-    if (progressText) progressText.textContent = i < total - 1 ? ("Question " + (i + 1) + " of " + (total - 1)) : "Last step: how to reach you";
-    if (progressBar) progressBar.style.width = Math.round(((i + 1) / total) * 100) + "%";
-    if (backBtn) backBtn.hidden = i === 0;
-    if (nextBtn) nextBtn.hidden = i === total - 1;
-    submitBtn.hidden = i !== total - 1;
-    if (focus) { var h = steps[i].querySelector(".ql, h3"); if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); } }
-  }
-  function goNext() {
-    var bad = validate(fieldsIn(steps[current]));
-    if (bad) { focusField(bad); return; }
-    showStep(current + 1, true);
-  }
-  if (steps.length) {
-    showStep(0, false);
-    nextBtn.addEventListener("click", goNext);
-    backBtn.addEventListener("click", function () { showStep(current - 1, true); });
-    $all('input[type="radio"]', form).forEach(function (r) {
-      r.addEventListener("change", function () {
-        if (r.name === "worked_dc" && r.value === "No") return;
-        setTimeout(goNext, 260);
-      });
-    });
-  }
-
-  $all("[data-goto-form]").forEach(function (a) {
-    a.addEventListener("click", function (e) {
-      e.preventDefault();
-      document.getElementById("check").scrollIntoView({ behavior: reduced() ? "auto" : "smooth", block: "start" });
-      setTimeout(function () { var f = form.querySelector('[name="worked_dc"]'); if (f) f.focus({ preventScroll: true }); }, 350);
-    });
-  });
-
-  function checkedValues(name) { return $all('input[name="' + name + '"]:checked', form).map(function (i) { return i.value; }); }
-  function buildPayload() {
-    var params = {};
-    try {
-      var q = new URLSearchParams(window.location.search);
-      ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid"].forEach(function (k) { if (q.get(k)) params[k] = q.get(k); });
-    } catch (e) { /* no query string */ }
-    return {
-      campaign: CONFIG.campaign,
-      page_variant: CONFIG.variant,
-      submitted_at: new Date().toISOString(),
-      answers: {
-        worked_dc: val("worked_dc"),
-        pay_type: val("pay_type"),
-        ot_hours: val("ot_hours"),
-        extra_pay: checkedValues("extra_pay"),
-        state: val("state")
-      },
-      contact: {
-        full_name: form.elements["full_name"].value.trim(),
-        phone: digits(form.elements["phone"].value),
-        email: form.elements["email"].value.trim(),
-        employer: employerNS.checked ? "Not sure" : employer.value.trim()
-      },
-      consent: { agreed: form.elements["consent"].checked, text: document.getElementById("consent-text").textContent },
-      tracking: params,
-      page_url: window.location.href.split("?")[0]
-    };
-  }
-
-  function showStatus(kind, html) { statusEl.className = "form-status " + kind; statusEl.innerHTML = html; statusEl.hidden = false; }
-  function setSending(on) {
-    sending = on;
-    submitBtn.disabled = on;
-    submitBtn.setAttribute("aria-busy", on ? "true" : "false");
-    submitBtn.querySelector(".label").textContent = on ? "Sending…" : SUBMIT_LABEL;
-  }
-  function callLine() { return CONFIG.phone ? " You can also call the firm at <strong>" + CONFIG.phone + "</strong>." : ""; }
-
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    if (sending) return;
-    statusEl.hidden = true;
-    var bad = validate(Object.keys(RULES));
-    if (bad) { showStatus("error", "Please fix the highlighted answers above."); focusField(bad); return; }
-    var hp = form.elements["company_website"];
-    if (hp && hp.value) return;
-    if (!CONFIG.leadEndpoint) {
-      showStatus("error", "Online requests are not connected yet, so nothing was sent." + callLine());
-      if (window.console) console.warn("LP_CONFIG.leadEndpoint is empty: set it to the lead-delivery URL.");
-      return;
-    }
-    setSending(true);
-    var ctrl = ("AbortController" in window) ? new AbortController() : null;
-    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, CONFIG.timeoutMs || 15000);
-    fetch(CONFIG.leadEndpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify(buildPayload()),
-      signal: ctrl ? ctrl.signal : undefined
-    }).then(function (res) {
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      return res.text().then(function (t) {
-        var data = null;
-        try { data = t ? JSON.parse(t) : null; } catch (err) { data = null; }
-        if (data && data.ok === false) throw new Error("Rejected");
-        return data;
-      });
-    }).then(function () {
-      clearTimeout(timer);
-      form.hidden = true;
-      successEl.hidden = false;
-      var h = successEl.querySelector("h3");
-      if (h) { h.setAttribute("tabindex", "-1"); h.focus(); }
-      if (typeof CONFIG.onConfirmed === "function") { try { CONFIG.onConfirmed(); } catch (err) { /* tracking must not break the page */ } }
-    }).catch(function () {
-      clearTimeout(timer);
-      setSending(false);
-      showStatus("error", "Your request could not be confirmed as sent, so please try again." + callLine());
-    });
-  });
-})();
-</script>
+  </div>
+</footer>
 
 </body>
 </html>
